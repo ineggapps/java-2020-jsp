@@ -16,6 +16,16 @@ public class HelloServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 클라이언트 요청이 GET 방식인 경우 실행
 		try {
+			// 클라이언트가 보낸 정보 받기
+			String name = req.getParameter("name");
+			int age = Integer.parseInt(req.getParameter("age"));
+			String msg = name + "님 반가워요<br/>";
+			if (age >= 19) {
+				msg += name + "님은 <span style=\"color:tomato\">성인</span>입니다.";
+			} else {
+				msg += name + "님은 <span style=\"color:tomato\">미성년자</span>입니다.";
+			}
+
 			// 클라이언트에 전송하는 문서 타입
 			resp.setContentType("text/html; charset=utf-8");
 
@@ -24,7 +34,7 @@ public class HelloServlet extends HttpServlet {
 			out.println("<html>");
 			out.println("<head><title>예제</title></head>");
 			out.println("<body><h3>GET방식으로 요청</h3>");
-			out.println("");
+			out.println(msg);
 			out.println("</body>");
 			out.println("</html>");
 		} catch (Exception e) {
@@ -36,6 +46,18 @@ public class HelloServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 클라이언트 요청이 POST 방식인 경우 실행
 		try {
+			//클라이언트가 전송한 문서 타입 설정(설정하지 않으면 ISO8855-1로 인식되어 한글 처리가 불가능)
+			req.setCharacterEncoding("UTF-8");
+			// 클라이언트가 보낸 정보 받기
+			String name = req.getParameter("name");
+			int age = Integer.parseInt(req.getParameter("age"));
+			String msg = name + "님 반가워요<br/>";
+			if (age >= 19) {
+				msg += name + "님은 <span style=\"color:green\">성인</span>입니다.";
+			} else {
+				msg += name + "님은 <span style=\"color:green\">미성년자</span>입니다.";
+			}
+
 			// 클라이언트에 전송하는 문서 타입
 			resp.setContentType("text/html; charset=utf-8");
 
@@ -44,7 +66,7 @@ public class HelloServlet extends HttpServlet {
 			out.println("<html>");
 			out.println("<head><title>예제</title></head>");
 			out.println("<body><h3>POST방식으로 요청</h3>");
-			out.println("");
+			out.println(msg);
 			out.println("</body>");
 			out.println("</html>");
 		} catch (Exception e) {
