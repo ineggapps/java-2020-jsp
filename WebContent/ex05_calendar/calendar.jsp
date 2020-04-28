@@ -74,25 +74,39 @@ a:hover {
 .character {
 	font-size: 2rem;
 	text-align: center;
-	margin:20px 0;
+	margin: 20px 0;
 }
 
 .calendar td {
+	width: 30px;
+	color: #333;
 	border: 1px solid #d9d9d9;
+}
+
+.calendar td:nth-child(7n+1) {
+	color: tomato;
+}
+
+.calendar td:nth-child(7n) {
+	color: blue;
+}
+
+.calendar td.gray {
+	color: #d9d9d9;
 }
 
 .head {
 	background-color: #f0f0f0;
 }
 
-table{
+table {
 	margin: 10px 0;
 }
 </style>
 </head>
 <body>
 	<div id="layout">
-		<p class="character"> ( ｯ◕ ܫ◕)ｯ' </p>
+		<p class="character"> ༼'๑◕⊖◕๑༽ </p>
 		<table>
 			<tr>
 				<td><a href="calendar.jsp?year=<%=year%>&month=<%=month - 1%>">◀</a>
@@ -113,9 +127,12 @@ table{
 			<%
 				int col = 0;
 			out.print("<tr>");
-			//1일 앞 공백처리
+			Calendar preCal = (Calendar) cal.clone();
+			preCal.set(Calendar.DATE, -(week-1-1));
+			int preDate = preCal.get(Calendar.DATE);
+			//1일 앞 처리
 			for (int i = 1; i < week; i++) {
-				out.println("<td>&nbsp;</td>");
+				out.println("<td class='gray'>" + (preDate++) + "</td>");
 				col++;
 			}
 			//날짜 채우기 (7일 단위로)
@@ -128,9 +145,10 @@ table{
 					col = 0;
 				}
 			}
-			//말일 뒤 공백 처리하기
+			//마지막 주 말일 다음 일 처리하기
+			int n = 1;
 			while (col > 0 && col < 7) {
-				out.print("<td>&nbsp;</td>");
+				out.print("<td class='gray'>" + (n++) + "</td>");
 				col++;
 			}
 			out.print("</tr>");
