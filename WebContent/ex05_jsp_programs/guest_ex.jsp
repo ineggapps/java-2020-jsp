@@ -5,7 +5,9 @@
 	//name 이름으로 파라미터를 보낸다. 없으면 null을 반환한다.
 	String name = request.getParameter("name");
 	String content = request.getParameter("content");
-	content = content.replaceAll("\n", "<br />");
+	if(content!=null){		
+		content = content.replaceAll("\n", "<br />");
+	}
 %>
 <!DOCTYPE html>
 <html>

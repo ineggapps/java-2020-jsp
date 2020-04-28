@@ -8,7 +8,9 @@
 	String content = request.getParameter("content");
 	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
 	String date = sdf.format(new Date());
+	if(content!=null){		
 	content = content.replaceAll("\n", "<br />");
+	}
 %>
 <!DOCTYPE html>
 <html>
