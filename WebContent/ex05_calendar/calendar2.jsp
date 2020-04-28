@@ -107,6 +107,9 @@ table {
 	function change() {
 		var f = document.calendarForm;
 		//alert(f.year.value + ":" + f.month.value);
+		f.action ="calendar2.jsp";
+		//form의 action속성을 지정하지 않으면 자기 자신을 가리킨다. 원칙은 action을 지정해 주는 것이다.
+		//javascript에서는 위와 같이 action 속성을 지정하면 된다.
 		f.submit();
 	}
 </script>
@@ -122,7 +125,7 @@ table {
 								for (int i= year-5; i <= year+5; i++) {
 							%>
 							<option value="<%=i%>"
-								<%=year == i ? "selected=\"selected\"" : ""%>><%=year%>년
+								<%=year == i ? "selected=\"selected\"" : ""%>><%=i%>년
 							</option>
 							<%
 								}
