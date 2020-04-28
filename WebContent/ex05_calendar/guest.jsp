@@ -8,6 +8,7 @@
 	String content = request.getParameter("content");
 	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
 	String date = sdf.format(new Date());
+	content = content.replaceAll("\n", "<br />");
 %>
 <!DOCTYPE html>
 <html>
@@ -44,12 +45,14 @@
       }
 
       input,textarea {
+	    padding:5px;
         border: 1px solid #d9d9d9;
         border-radius: 5px;
       }
 
       input:focus,
-      button:focus {
+      button:focus,
+      textarea:focus {
         outline: none;
       }
       
@@ -87,6 +90,20 @@
 		width:98%;
       	height:50px;
       	margin:0 auto;
+      }
+      
+      
+      .control {
+      	text-align:right;
+      	border-bottom:0 none;
+      }
+      
+      .control button{
+      	cursor:pointer;
+	    padding:5px;
+      	background-color:#fff;
+      	border:1px solid #ccc;
+      	border-radius:5px;
       }
 
       .list table tr {
@@ -155,7 +172,7 @@
 	            <td><textarea name="content" cols="30" rows="10"></textarea></td>
 	          </tr>
 	          <tr>
-	            <td colspan="2">
+	            <td colspan="2" class="control">
 	              <button type="submit">등록하기</button>
 	              <button type="button" onclick="reset()">다시 입력</button>
 	            </td>
