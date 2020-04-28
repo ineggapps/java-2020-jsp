@@ -3,8 +3,6 @@
 
 <%//스크립트릿 시작
 	String method = request.getMethod();
-	//클라이언트가 보낸 정보의 인코딩 설정(설정하지 않으면 기본 ISO 8859-1, 그러므로 미설정 시 한글 깨짐)
-	request.setCharacterEncoding("utf-8"); //post메서드를 사용할 때는 반드시 UTF-8로 인코딩하였다는 것을 코드로 명시해 주어야 한글을 인식할 수 있음.
 	//클라이언트가 보낸 정보를 넘겨 받음
 	String name = request.getParameter("name");
 	int age = Integer.parseInt(request.getParameter("age"));

@@ -8,7 +8,7 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
 <body>
-	<form action="ex1_ok.jsp" method="post">
+	<form action="ex1_ok.jsp" method="get">
         <p>이름: <input type="text" name="name"></p>
         <p>나이: <input type="text" name="age"></p>
         <p>
