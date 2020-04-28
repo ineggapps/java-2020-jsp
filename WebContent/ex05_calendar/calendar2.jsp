@@ -118,19 +118,15 @@ table {
 			<table>
 				<tr>
 					<td><select name="year" onchange="change();">
-						<%
-							for (int i=year-5;i<=year;i++){
-						%>
-							<option value="<%=i%>" ><%=i %>년</option>
-						<%
-							}
-						%>
-							<option value="<%=year%>" selected="selected"><%=year%>년</option>		
-						<%
-							for (int i=year+1;i<=year+5;i++){
-						%>
-							<option value="<%=i%>"><%=i %>년</option>
-						<% } %>
+							<%
+								for (int i= year-5; i <= year+5; i++) {
+							%>
+							<option value="<%=i%>"
+								<%=year == i ? "selected=\"selected\"" : ""%>><%=year%>년
+							</option>
+							<%
+								}
+							%>
 					</select> <select name="month" onchange="change();">
 							<%
 								for (int i = 1; i <= 12; i++) {
