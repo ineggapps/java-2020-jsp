@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="java.util.Date"%>
@@ -14,7 +15,6 @@
 	int year = Integer.parseInt(birth.substring(0,4));
 	int month = Integer.parseInt(birth.substring(5,7));
 	int date = Integer.parseInt(birth.substring(8));	
-	int yearsOld = 999;
 	String myBand = band[year % band.length];
 	String phone = request.getParameter("phone");
 	String salary = request.getParameter("salary");
@@ -38,6 +38,20 @@
 	bonus = nf.format(bon);
 	String taxS = nf.format(tax);
 	String incomeS = nf.format(income);	
+	
+	Calendar cal=Calendar.getInstance();
+    cal.set(Calendar.YEAR, year);
+    cal.set(Calendar.MONTH, month-1);
+    cal.set(Calendar.DATE, date);
+    
+    Calendar now = Calendar.getInstance ();
+    
+    int age = now.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
+    if ( (cal.get(Calendar.MONTH) > now.get(Calendar.MONTH))
+            || (cal.get(Calendar.MONTH) == now.get(Calendar.MONTH) 
+              && cal.get(Calendar.DAY_OF_MONTH) > now.get(Calendar.DAY_OF_MONTH))) {
+        age--;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -88,7 +102,7 @@
 			</tr>
 			<tr>
 				<td>나이</td>
-				<td><%=yearsOld %></td>
+				<td><%=age %></td>
 			</tr>
 			<tr>
 				<td>전화번호</td>
