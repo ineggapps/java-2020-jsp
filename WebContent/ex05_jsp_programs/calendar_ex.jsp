@@ -173,7 +173,7 @@ function change() {
 			for(int i=week%7; i<=7; i++) {
 				out.print("<td class='gray'>"+(n++)+"</td>");
 			}
-		} else if(week==0) { // 마지막일자가 금요일인 경우
+		} else if(week%7==0) { // 마지막일자가 금요일인 경우
 			out.print("<td class='gray'>"+(n)+"</td>");
 		}
 		out.print("</tr>");
