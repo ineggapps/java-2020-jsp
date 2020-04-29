@@ -7,6 +7,16 @@
 <%@page import="java.util.Set"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%!
+	public boolean isSelected(Integer num, Integer numbers[]){
+		for(int n: numbers){
+			if(n==num){
+				return true;
+			}
+		}
+		return false;
+	}
+%>
 <%
 	//로또 기본설정
 	List<Integer> lotto;
@@ -55,20 +65,80 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+<style type="text/css">
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+	*{
+		margin:0;
+		padding:0;
+	}
+	
+	body{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+	
+	#wrap{
+		width:700px;
+		margin:0 auto;
+	}
+	
+	#wrap table{
+		width:100%;
+		margin:10px auto;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	
+	#wrap table tr.title{
+		border-bottom:1px solid #d9d9d9;	
+	}
+	
+	#wrap table tr.title td{
+		font-size:2rem;
+	}
+	
+	#wrap table tr td{
+		padding:10px 0;
+		text-align:center;
+		font-size:1.8rem;
+	}
+	
+	#wrap table tr td span{
+		text-align:center;
+		display:inline-block;
+		width:40px;
+		height:40px;
+		padding:20px;
+		margin:10px 5px;
+		background-color:#efefef;
+		border-radius:100%;
+	}
+	
+	#wrap table tr td span.selected{
+		background-color:tomato;
+		color:#fff;
+		font-weight:bold; 
+	}
+</style>
 </head>
 <body>
-	<table>
-	<tr><td>당첨번호</td></tr>
-	<%
-		for(List<Integer> lt: cases){
-			out.print("<tr><td>");
-			for(Integer n: lt){
-				out.print("<span>");
-				out.print(n+ "</span>&nbsp;");
+	<div id="wrap">
+		<table>
+		<tr class="title"><td> ʘ̥_ʘ̥ 생성 번호</td></tr>
+		<%
+			for(List<Integer> lt: cases){
+				out.print("<tr><td>");
+				for(Integer n: lt){
+					if(isSelected(n, numbers)){
+						out.print("<span class=\"selected\">");
+					}else{					
+						out.print("<span>");
+					}
+					out.print(n+ "</span>");
+				}
+				out.print("</td></tr>");
 			}
-			out.print("</td></tr>");
-		}
-	%>
-	</table>
+		%>
+		</table>
+	</div>
 </body>
 </html>
