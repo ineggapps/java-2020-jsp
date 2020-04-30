@@ -25,9 +25,15 @@
 	
 	int amount = Integer.parseInt(request.getParameter("amount"));
 	String[] nums = request.getParameterValues("nums");
-	Integer[] numbers = new Integer[nums.length];
-	for(int i=0;i<nums.length;i++){
-		numbers[i] = Integer.parseInt(nums[i]);
+	Integer[] numbers;
+	if(nums!=null && nums.length>0){
+		//null check 및 길이 체크
+		numbers = new Integer[nums.length];
+		for(int i=0;i<nums.length;i++){
+			numbers[i] = Integer.parseInt(nums[i]);
+		}
+	}else{
+		numbers = new Integer[0];
 	}
 	
 	//수량만큼 배열 만들어서 넣기

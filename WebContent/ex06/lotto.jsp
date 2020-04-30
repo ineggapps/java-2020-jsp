@@ -18,14 +18,37 @@
     	#wrap table{
     		width:100%;
     		margin:20px auto;
+    		border-collapse: collapse;
+    		border-spacing: 0;
+    	}
+    	
+    	#wrap table.title tr{
+    		border-bottom:1px solid #d9d9d9;
+    	}
+    	
+    	#wrap table.title tr td{
+    	    padding:15px 0;
+    	}
+    
+    	#wrap table.title tr.title {
+    		font-weight:bold;
+    		text-align:center;
     	}
     	
     	table.content td{
     		text-align:right;
+    		padding:10px 0;
     	}
     	
     	table td.center{
     		text-align:center;
+    	}
+    	
+    	button{
+    		background-color:#fff;
+    		border:1px solid #d9d9d9;
+    		min-height:25px;
+    		cursor:pointer;
     	}
     </style>
     <script>
@@ -66,11 +89,11 @@
     <div id="wrap">
       <form action="lotto_ok.jsp" method="POST" name="lottoForm">
       <table class="title">
-        <tr>
+        <tr class="title">
           <td>꿈의 로또</td>
         </tr>
         <tr>
-          <td>로또 구매 개수[1~5]: <input type="text" name="amount" maxlength="1"/></td>
+          <td>로또 구매 개수[1~5]: <input type="text" name="amount" maxlength="1" size="1"/></td>
         </tr>
       </table>
       <table class="content">
