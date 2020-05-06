@@ -2,6 +2,9 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%--Tomcat 7.0부터는 입력하지 않아도 문제가 발생하지 않는다.--%>
 <%@ page isErrorPage="true" %>
+<%
+	response.setStatus(HttpServletResponse.SC_OK);
+%>
 <!DOCTYPE html>
 <html>
 <head>
