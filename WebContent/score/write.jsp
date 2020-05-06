@@ -149,10 +149,10 @@
                       <button type="submit" name="btn" class="row_button navy_button">
                         가입하기
                       </button>
-                      <button type="button" name="btn" class="row_button white_button">
+                      <button type="reset" name="btn" class="row_button white_button">
                         다시입력
                       </button>
-                      <button type="reset" name="btn" class="row_button white_button">
+                      <button type="button" name="btn" class="row_button white_button">
                         등록취소
                       </button>
                     </div>

@@ -9,7 +9,7 @@
     </div>
     <div id="gnb_area">
       <h1 id="logo">
-        <a href="./index.html">성적관리시스템</a>
+        <a href="./write.jsp">성적관리시스템</a>
       </h1>
       <ul id="gnb">
         <li class="main_menu">
@@ -18,7 +18,7 @@
             <li class="sub_menu"><a href="./write.jsp">성적 등록</a></li>
           </ul>
         </li>
-      </ul>
+      </ul> 
     </div>
   </div>
 </header>
