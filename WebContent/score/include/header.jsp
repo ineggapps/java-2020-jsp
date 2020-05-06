@@ -13,9 +13,9 @@
       </h1>
       <ul id="gnb">
         <li class="main_menu">
-          <a href="./teamenu.html"><span>성적 관리</span></a>
+          <a href="./write.jsp"><span>성적 관리</span></a>
           <ul class="sub_gnb">
-            <li class="sub_menu"><a href="./teamenu.html">성적 등록</a></li>
+            <li class="sub_menu"><a href="./write.jsp">성적 등록</a></li>
           </ul>
         </li>
       </ul>
