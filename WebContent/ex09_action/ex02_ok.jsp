@@ -9,6 +9,7 @@
 %>
 <jsp:setProperty property="*" name="vo"/>
 <%--아래의 경우에는 VO클래의 필드 이름과 form태그의 이름이 다를 경우에는 수동으로 맞출 수도 있지만, 이런 식으로는 거의 사용되지 않는다. --%>
+<%--property 클래스의 필드명 / param은 form태그의 name속성 값 --%>
 <jsp:setProperty property="operator" name="vo" param="oper"/>
 <%
 	// vo.setNum1(Integer.parseInt(request.getParameter("num1")));
