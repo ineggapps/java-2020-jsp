@@ -6,19 +6,19 @@ h3 {
 }
 
 .banner_visual.join {
-  background: url("https://images.pexels.com/photos/1366942/pexels-photo-1366942.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
-    no-repeat center;
+  background: url("https://images.pexels.com/photos/1850021/pexels-photo-1850021.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+    no-repeat center; 
   background-size: cover;
   background-attachment: fixed;
   height: 850px;
 }
 
-.banner_visual.join h2 { 
+.banner_visual.join h2 {
   font-weight: 300;
   padding-top: 230px;
-}
+} 
 
-.row_button{
+.row_button {
   user-select: none;
   display: block;
   cursor: pointer;
@@ -30,12 +30,13 @@ h3 {
 }
 
 .white_button {
-	  border: 1px solid #233e83;
-	  background-color: #fff;
-	  color: #233e83;
+  border: 1px solid #233e83;
+  background-color: #fff;
+  color: #233e83;
 }
 
-.navy_button, .white_button:hover {
+.navy_button,
+.white_button:hover {
   background-color: #233e83;
   border: 0;
   color: #fff;
