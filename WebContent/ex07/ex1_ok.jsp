@@ -16,16 +16,18 @@
 </head>
 <body>
 	<%
+		String name = map.get("name")[0]; //Map의 value는 String[] (배열) 형이었으므로 반드시 배열형태로 취급해주어야 한다.
+		out.print("이름: "  + name + "<br />");
 		Iterator<String> it = map.keySet().iterator();
-	while(it.hasNext()){
-		String key = it.next();
-		String[] ss= map.get(key);
-		if(ss!=null){
-			for(String s: ss){
-				out.print(key + ":" + s + "<br />");
+		while(it.hasNext()){
+			String key = it.next();
+			String[] ss= map.get(key);
+			if(ss!=null){
+				for(String s: ss){
+					out.print(key + ":" + s + "<br />");
+				}
 			}
 		}
-	}
 	%>
 </body>
 </html>
