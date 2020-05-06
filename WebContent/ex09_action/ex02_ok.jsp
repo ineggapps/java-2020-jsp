@@ -17,6 +17,23 @@
 	//그러나 oper은 넘어가지 않는다. class에는 operator이고 넘기는 파라미터의 이름은 oper이므로 다음의 값은 성립하지 않는다.
 	// vo.setOperator(requeset.getParameter("oper")); //자동으로 삽입되지 않음.
 %>
+<%
+	String s="";
+	switch(vo.getOperator()){
+	case "+": 
+		s= "합: " + (vo.getNum1()+vo.getNum2());
+		break;
+	case "-":
+		s= "차: " + (vo.getNum1()-vo.getNum2());
+		break;	
+	case "*":
+		s= "곱: " + (vo.getNum1()*vo.getNum2());
+		break;	
+	case "/":
+		s= "나누기: " + (vo.getNum1()/vo.getNum2());
+		break;	
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +42,6 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
 <body>
-	<%=vo.getNum1()%> <br />
-	<%=vo.getOperator() %> <br />
-	<%=vo.getNum2() %><br />
+	<%=vo.getNum1()%> <%=vo.getOperator() %> <%=vo.getNum2() %> ? <br/> <%=s %>
 </body>
 </html>
