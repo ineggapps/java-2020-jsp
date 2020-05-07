@@ -102,7 +102,7 @@ ul#right_side li {
 
 #gnb {
   float: right;
-  width: 60%;
+  /*width: 60%;*/
   text-align: center;
   color: #202023;
 }
