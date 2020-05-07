@@ -35,7 +35,7 @@ ScoreDAO(); List<ScoreDTO>
                 </div>
                 <div class="row">
                   <div class="row_title">
-                    <h3><strong class="strong">성적 목록</strong> 조회하기</h3>
+                    <h3><strong class="strong">성적</strong> 조회하기</h3>
                   </div>
                   <div class="row_buttons">
                     <input class="delete_button" type="button" value="삭제" class="btn" />
