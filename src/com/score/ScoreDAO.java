@@ -7,6 +7,15 @@ import com.util.DBConn;
 
 //성적 점수 CRUD 작업
 //Create(insert), Retrieve(select), Update, Delete
+
+/*
+ CRUD 등록 단계
+ 1. 등록하기 (가장 쉬운 작업)
+ 2. 목록 (페이징까지 포함하면 어려운 작업)
+ 3. 삭제...
+ 4. 수정...
+*/
+//성적처리 주제에서는 페이징 처리를 일단 고려 대상에서 제외...
 public class ScoreDAO {
 	private Connection conn = DBConn.getConnection();
 
