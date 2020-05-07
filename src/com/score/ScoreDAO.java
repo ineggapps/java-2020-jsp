@@ -2,6 +2,9 @@ package com.score;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.util.DBConn;
 
@@ -45,5 +48,49 @@ public class ScoreDAO {
 			}
 		}
 		return result;
+	}
+
+	public List<ScoreDTO> listScore() {
+		List<ScoreDTO> list = new ArrayList<ScoreDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+		try {
+			sql = "SELECT hak, name, birth, kor, eng, mat,"
+					+ " (kor+eng+mat) tot, (kor+eng+mat)/3 ave,"
+					+ " RANK() OVER(ORDER BY (kor+eng+mat) DESC) rank"
+					+ " FROM score";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ScoreDTO dto = new ScoreDTO();
+				dto.setHak(rs.getString("hak"));
+				dto.setName(rs.getString("name"));
+				dto.setBirth(rs.getDate("birth").toString());
+				dto.setKor(rs.getInt("kor"));
+				dto.setEng(rs.getInt("eng"));
+				dto.setMat(rs.getInt("mat"));
+				dto.setTot(rs.getInt("tot"));
+				dto.setAve(rs.getInt("ave"));
+				dto.setRank(rs.getInt("rank"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return list;
 	}
 }
