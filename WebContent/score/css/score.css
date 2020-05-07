@@ -1,17 +1,17 @@
 @charset "UTF-8";
 
-#global_message{
-	user-select:none;
-	position:fixed;
-	bottom:0;
-	left:0;
-	opacity:0.9;
-	width:100%;
-	padding:20px;
-	background-color:#FE403D;
-	text-align:center;
-	color:#fff; 
-	z-index:999;
+#global_message {
+  user-select: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 0.9;
+  width: 100%;
+  padding: 20px;
+  background-color: #fe403d;
+  text-align: center;
+  color: #fff;
+  z-index: 999;
 }
 
 h2,
@@ -356,6 +356,7 @@ table thead td {
 table tbody tr:hover td {
   font-weight: bold;
   color: #233e83;
+  background-color:#f9f9f9;
 }
 
 table tr {
@@ -407,36 +408,36 @@ table td input[type="button"]:hover {
   color: #fff;
 }
 
-/* .col_check {
+.col_check {
   width: 5%;
 }
 .col_hak {
-  width: 15%;
+  width: 10%;
 }
 .col_name {
-  width: 15%;
+  width: 10%;
 }
 .col_birth {
   width: 15%;
 }
 .col_kor {
-  width: 15%;
-}
+  width: 7%;
+} 
 .col_eng {
-  width: 15%;
+  width: 7%;
 }
 .col_mat {
-  width: 10%;
+  width: 7%;
 }
 .col_tot {
-  width: 10%;
+  width: 7%;
 }
 .col_ave {
-  width: 10%;
+  width: 7%;
 }
 .col_rank {
-  width: 10%;
+  width: 7%;
 }
 .col_control {
   width: auto;
-} */
+}
