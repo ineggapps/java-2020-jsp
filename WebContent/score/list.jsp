@@ -12,6 +12,60 @@ ScoreDAO(); List<ScoreDTO>
       <link rel="stylesheet" href="./css/reset.css" />
       <link rel="stylesheet" href="./css/layout.css" />
       <link rel="stylesheet" href="./css/score.css" />
+      <script type="text/javascript">
+        function deleteList() {
+          var f = document.listForm;
+          var cnt = 0;
+
+          if (f.haks == undefined) {
+            return;
+          }
+
+          if (f.haks.length != undefined) {
+            // 체크박스가 둘 이상인 경우
+            for (var i = 0; i < f.haks.length; i++) {
+              if (f.haks[i].checked) cnt++;
+            }
+          } else {
+            // 체크박스가 하나인 경우
+            if (f.haks.checked) cnt++;
+          }
+
+          if (cnt == 0) {
+            alert("선택한 항목이 없습니다.");
+            return;
+          }
+
+          if (confirm("선택 항목을 삭제 하시겠습니까 ?")) {
+          }
+        }
+
+        function check() {
+          var f = document.listForm;
+
+          if (f.haks == undefined) return;
+
+          if (f.haks.length != undefined) {
+            // 체크박스가 둘 이상인 경우
+            for (var i = 0; i < f.haks.length; i++) {
+              if (f.chkAll.checked) f.haks[i].checked = true;
+              else f.haks[i].checked = false;
+            }
+          } else {
+            // 체크박스가 하나인 경우
+            if (f.chkAll.checked) f.haks.checked = true;
+            else f.haks.checked = false;
+          }
+        }
+
+        function deleteScore(hak) {
+          if (confirm("삭제 하시겠습니까 ?")) {
+        	  location.href="delete.jsp?hak="+hak;
+          }
+        }
+
+        function updateScore(hak) {}
+      </script>
     </head>
     <body>
       <div id="wrap">
@@ -76,13 +130,13 @@ ScoreDAO(); List<ScoreDTO>
                         <td><%=dto.getBirth()%></td>
                         <td><%=dto.getKor()%></td>
                         <td><%=dto.getEng()%></td>
-                        <td><%=dto.getMat()%></td> 
+                        <td><%=dto.getMat()%></td>
                         <td><%=dto.getTot()%></td>
                         <td><%=dto.getAve()%></td>
                         <td><%=dto.getRank()%></td>
                         <td>
                           <input type="button" value="수정" class="btn" />
-                          <input type="button" value="삭제" class="btn" />
+                          <input type="button" value="삭제" class="btn" onclick="deleteScore('<%=dto.getHak()%>')" />
                         </td>
                       </tr>
                       <%} %>
