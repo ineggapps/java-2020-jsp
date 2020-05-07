@@ -1,4 +1,19 @@
 @charset "UTF-8";
+
+#global_message{
+	user-select:none;
+	position:fixed;
+	bottom:0;
+	left:0;
+	opacity:0.9;
+	width:100%;
+	padding:20px;
+	background-color:#FE403D;
+	text-align:center;
+	color:#fff; 
+	z-index:999;
+}
+
 h2,
 h3 {
   font-weight: 300;
