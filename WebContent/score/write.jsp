@@ -112,7 +112,7 @@
           alert("점수를 올바르게 입력해 주세요.");
           return false;
         }
-        if (score < 1 || score > 100) {
+        if (score < 0 || score > 100) {
           alert("점수는 1~100점까지만 입력 가능합니다.");
           return false;
         }
