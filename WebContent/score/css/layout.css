@@ -93,7 +93,6 @@ ul#right_side li {
 }
 
 #logo {
-  font-family: "Arial Black", sans-serif;
   font-weight: bold;
   margin-right: 50px;
   float: left;
@@ -395,8 +394,8 @@ footer {
 }
 
 .bottom_logo {
-  font-family: "Arial Black", sans-serif;
   font-size: 2rem;
+  font-weight: bold;
   color: #6c6c6c;
 }
 
