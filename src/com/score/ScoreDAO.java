@@ -1,7 +1,9 @@
-package com.util;
+package com.score;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import com.util.DBConn;
 
 //성적 점수 CRUD 작업
 //Create(insert), Retrieve(select), Update, Delete

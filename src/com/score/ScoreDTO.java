@@ -1,4 +1,4 @@
-package com.util;
+package com.score;
 
 public class ScoreDTO {
 	private String hak;
