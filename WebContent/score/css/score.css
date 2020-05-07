@@ -7,16 +7,23 @@ h3 {
 
 .banner_visual.join {
   background: url("https://images.pexels.com/photos/1850021/pexels-photo-1850021.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
-    no-repeat center; 
+    no-repeat center;
+  height: 850px;
   background-size: cover;
   background-attachment: fixed;
-  height: 850px;
+}
+
+.banner_visual {
+  background: url("https://images.pexels.com/photos/238118/pexels-photo-238118.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+    no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .banner_visual.join h2 {
   font-weight: 300;
   padding-top: 230px;
-} 
+}
 
 .row_button {
   user-select: none;
@@ -318,3 +325,90 @@ ul.email {
 .login_menu li:not(:last-child) a {
   margin-right: 4px;
 }
+
+/*테이블 */
+
+table {
+  width: 100%;
+  border-top: 3px solid #233e83;
+  text-align: center;
+}
+
+table thead td {
+  font-weight: bold;
+}
+
+table tbody tr:hover td {
+  font-weight: bold;
+  color: #233e83;
+}
+
+table tr {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+table td {
+  padding: 20px;
+}
+
+.row_buttons *:first-child {
+  float: left;
+}
+.row_buttons *:last-child {
+  float: right;
+}
+
+.delete_button,
+.enroll_button {
+  cursor: pointer;
+  user-select: none;
+  margin: 20px 0;
+  float: right; 
+  /* width: 50px; */
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  text-align: center;
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.delete_button:hover,
+.enroll_button:hover {
+  background-color: #233e83;
+  color: #fff;
+}
+
+/* .col_check {
+  width: 5%;
+}
+.col_hak {
+  width: 15%;
+}
+.col_name {
+  width: 15%;
+}
+.col_birth {
+  width: 15%;
+}
+.col_kor {
+  width: 15%;
+}
+.col_eng {
+  width: 15%;
+}
+.col_mat {
+  width: 10%;
+}
+.col_tot {
+  width: 10%;
+}
+.col_ave {
+  width: 10%;
+}
+.col_rank {
+  width: 10%;
+}
+.col_control {
+  width: auto;
+} */

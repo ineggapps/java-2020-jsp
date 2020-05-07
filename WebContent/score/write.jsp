@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="./css/layout.css" />
     <link rel="stylesheet" href="./css/score.css" />
     <script>
+      if (typeof String.prototype.trim !== "function") {
+        String.prototype.trim = function () { 
+          var TRIM_PATTERN = /(^\s*)|(\s*$)/g;
+          return this.replace(TRIM_PATTERN, "");
+        };
+      }
+
       function confirm() {
         const f = document.score;
 
@@ -91,7 +98,7 @@
           alert("점수를 입력해 주세요");
           return false;
         }
-        if (!/[0-9]{1,3}/.test(score)) {
+        if (!/^[0-9]{1,3}$/.test(score)) {
           alert("점수를 올바르게 입력해 주세요.");
           return false;
         }
@@ -152,7 +159,12 @@
                       <button type="reset" name="btn" class="row_button white_button">
                         다시입력
                       </button>
-                      <button type="button" name="btn" class="row_button white_button">
+                      <button
+                        type="button"
+                        name="btn"
+                        class="row_button white_button"
+                        onclick="javascript:location.href='list.jsp'"
+                      >
                         등록취소
                       </button>
                     </div>

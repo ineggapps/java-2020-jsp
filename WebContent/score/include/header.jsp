@@ -15,6 +15,7 @@
         <li class="main_menu">
           <a href="./write.jsp"><span>성적 관리</span></a>
           <ul class="sub_gnb">
+            <li class="sub_menu"><a href="./list.jsp">성적 목록</a></li>
             <li class="sub_menu"><a href="./write.jsp">성적 등록</a></li>
           </ul>
         </li>
