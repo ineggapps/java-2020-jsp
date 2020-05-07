@@ -114,4 +114,72 @@ public class ScoreDAO {
 		}
 		return result;
 	}
+
+	public ScoreDTO readScore(String hak) {
+		ScoreDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			sql = "SELECT hak, name, birth, kor, eng, mat FROM score WHERE hak=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, hak);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				dto = new ScoreDTO();
+				dto.setHak(rs.getString("hak"));
+				dto.setName(rs.getString("name"));
+				dto.setBirth(rs.getDate("birth").toString());
+				dto.setKor(rs.getInt("kor"));
+				dto.setEng(rs.getInt("eng"));
+				dto.setMat(rs.getInt("mat"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return dto;
+	}
+
+	public int updateScore(ScoreDTO dto) throws Exception {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			sql = "UPDATE score SET name=?, birth=?, kor=?, eng=?, mat=? WHERE hak=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getBirth());
+			pstmt.setInt(3, dto.getKor());
+			pstmt.setInt(4, dto.getEng());
+			pstmt.setInt(5, dto.getMat());
+			pstmt.setString(6, dto.getHak());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+
+		return result;
+	}
 }

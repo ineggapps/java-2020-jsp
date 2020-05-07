@@ -83,4 +83,12 @@ public class ScoreDTO {
 		this.rank = rank;
 	}
 
+	@Override
+	public String toString() {
+		return "ScoreDTO [hak=" + hak + ", name=" + name + ", birth=" + birth + ", kor=" + kor + ", eng=" + eng
+				+ ", mat=" + mat + ", tot=" + tot + ", ave=" + ave + ", rank=" + rank + "]";
+	}
+	
+	
+
 }
