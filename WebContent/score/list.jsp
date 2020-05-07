@@ -38,6 +38,8 @@ ScoreDAO(); List<ScoreDTO>
           }
 
           if (confirm("선택 항목을 삭제 하시겠습니까 ?")) {
+        	  f.action = "deleteList.jsp";
+        	  f.submit();
           }
         }
 
@@ -100,7 +102,7 @@ ScoreDAO(); List<ScoreDTO>
                     <h3><strong class="strong">성적</strong> 조회하기</h3>
                   </div>
                   <div class="row_buttons">
-                    <input class="delete_button" type="button" value="삭제" class="btn" />
+                    <input class="delete_button" type="button" value="삭제" onclick="deleteList()"/>
                     <input
                       class="enroll_button"
                       type="button"
@@ -114,8 +116,8 @@ ScoreDAO(); List<ScoreDTO>
                   <table id="card_history">
                     <thead>
                       <tr>
-                        <td calss="col_check">
-                          <input type="checkbox" name="chkAll" value="all" />
+                        <td class="col_check">
+                          <input type="checkbox" name="chkAll" value="all" onclick="check()"/>
                         </td>
                         <td class="col_hak">학번</td>
                         <td class="col_name">이름</td>

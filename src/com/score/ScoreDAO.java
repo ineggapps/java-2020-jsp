@@ -114,6 +114,38 @@ public class ScoreDAO {
 		}
 		return result;
 	}
+	
+	public int deleteScores(String[] haks) throws Exception {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		StringBuilder sql = new StringBuilder("DELETE FROM score WHERE hak in (");
+		try {//in haks가 넘어온 배열의 개수만큼 ?(물음표) 찍어줘야 함.
+			for (int i = 0; i < haks.length; i++) {
+				sql.append("?");
+				if (i < haks.length - 1) { // 마지막 원소가 아닐 때만 comma 찍어 나열하기
+					sql.append(", ");
+				}
+			}
+			sql.append(")");
+			System.out.println(sql.toString());
+			pstmt = conn.prepareStatement(sql.toString());
+			for(int i=0;i<haks.length;i++) {
+				pstmt.setString(i+1, haks[i]);
+			}
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return result;
+	}
 
 	public ScoreDTO readScore(String hak) {
 		ScoreDTO dto = null;
@@ -182,4 +214,5 @@ public class ScoreDAO {
 
 		return result;
 	}
+
 }
