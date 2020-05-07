@@ -117,13 +117,18 @@
         <div id="main">
           <article id="main_container">
             <!-- Content영역 -->
-            <div class="banner_visual join">
-              <div class="row join">
-                <h2><span>성적 등록</span></h2>
-                <p class="welcome"><span>Input your score!</span></p>
-                <p><span>성적 정보 처리를 위한 기초정보를 입력하세요.</span></p>
+            <div class="banner_visual">
+                <h2>
+                  <span>성적 관리</span>
+                </h2>
+                <div class="visual_text">
+                  <span>누가 누가 공부를 잘하나?</span>
+                </div>
+                <ul class="lnb">
+                  <li class="on"><a href="./list.jsp">성적 목록</a></li>
+                  <li><a href="./write.jsp">성적 등록</a></li>
+                </ul>
               </div>
-            </div>
             <div class="row">
               <form action="write_ok.jsp" name="score" onsubmit="return confirm()">
                 <div class="joinbox">
