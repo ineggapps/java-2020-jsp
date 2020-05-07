@@ -125,8 +125,8 @@
                   <span>누가 누가 공부를 잘하나?</span>
                 </div>
                 <ul class="lnb">
-                  <li class="on"><a href="./list.jsp">성적 목록</a></li>
-                  <li><a href="./write.jsp">성적 등록</a></li>
+                  <li><a href="./list.jsp">성적 목록</a></li>
+                  <li class="on"><a href="./write.jsp">성적 등록</a></li>
                 </ul>
               </div>
             <div class="row">
