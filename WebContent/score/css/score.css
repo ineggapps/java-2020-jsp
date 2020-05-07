@@ -382,7 +382,7 @@ table td input[type="button"]:hover {
   border: 1px solid #d9d9d9;
   border-radius: 3px;
   text-align: center;
-  padding: 5px;
+  padding: 5px 10px;
   font-size: 1rem;
 }
 
