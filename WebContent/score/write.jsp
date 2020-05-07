@@ -1,4 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8"%> <%@ page trimDirectiveWhitespaces="true" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	String msg = "";
+	String error = request.getParameter("error");
+	if(error!=null){
+		msg = "학번 중복 등으로 자료 입력에 실패하였습니다.";
+	}
+
+%>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -87,7 +97,7 @@
         var y = parseInt(data.substr(0, 4));
         var m = parseInt(data.substr(4, 2));
         if (m < 1 || m > 12) return false;
-        var d = parseInt(data.substr(6));
+        var d = parseInt(data.substr(6)); 
         var lastDay = new Date(y, m, 0).getDate();
         if (d < 1 || d > lastDay) return false;
         return true;
@@ -111,6 +121,11 @@
     </script>
   </head>
   <body>
+  	<%if(error!=null){ %>
+  	<div id="global_message">
+  		<%=msg %>
+  	</div>
+  	<%} %>
     <div id="wrap">
       <jsp:include page="./include/header.jsp" />
       <main id="content">
