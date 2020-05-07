@@ -56,13 +56,11 @@ public class ScoreDAO {
 		ResultSet rs = null;
 		String sql;
 		try {
-			sql = "SELECT hak, name, birth, kor, eng, mat,"
-					+ " (kor+eng+mat) tot, (kor+eng+mat)/3 ave,"
-					+ " RANK() OVER(ORDER BY (kor+eng+mat) DESC) rank"
-					+ " FROM score";
+			sql = "SELECT hak, name, birth, kor, eng, mat," + " (kor+eng+mat) tot, (kor+eng+mat)/3 ave,"
+					+ " RANK() OVER(ORDER BY (kor+eng+mat) DESC) rank" + " FROM score";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				ScoreDTO dto = new ScoreDTO();
 				dto.setHak(rs.getString("hak"));
 				dto.setName(rs.getString("name"));
@@ -92,5 +90,28 @@ public class ScoreDAO {
 			}
 		}
 		return list;
+	}
+
+	public int deleteScore(String hak) throws Exception {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
+		try {
+			sql = "DELETE FROM score WHERE hak=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, hak);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return result;
 	}
 }
