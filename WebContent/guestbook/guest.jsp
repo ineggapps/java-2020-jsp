@@ -11,15 +11,16 @@
 	GuestDAO dao = new GuestDAO();
 	
 	MyCustomUtil myCustomUtil = new MyCustomUtil();
-	String listUrl = cp + "/" + GuestDAO.FOLDER + "/" + GuestDAO.PAGE_GUEST;
-	String pageNum = request.getParameter("page");
+	int current_page = 1;
 	int rows = 10;
 	int dataCount = dao.dataCount();
 	int total_page = myCustomUtil.pageCount(rows, dataCount);
-	int current_page = 1;
+	String pageNum = request.getParameter("page");
 	if (pageNum != null) {
 		current_page = Integer.parseInt(pageNum);
 	}
+	String listUrl = cp + "/" + GuestDAO.FOLDER + "/" + GuestDAO.PAGE_GUEST;
+	String deleteUrl = cp + "/" + GuestDAO.FOLDER + "/" + GuestDAO.PAGE_DELETE + "?page=" + current_page;
 	if(current_page>total_page){
 		current_page = total_page;
 	}
@@ -28,7 +29,8 @@
 	int start = (current_page - 1) * rows + 1;
 	int end = current_page * rows;
 	List<GuestDTO> list = dao.listGuest(start, end);
-	String cn = listUrl.indexOf("?") >= 0 ? "&amp;" : "?";
+	String cn = listUrl.indexOf("?") >= 0 ? "&" : "?";
+	String delCn = deleteUrl.indexOf("?") >= 0 ? "&" : "?";
 %>
 <!DOCTYPE html>
 <html>
@@ -38,6 +40,14 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/layout.css" />
+<script>
+	function del(num){
+		var url="<%=deleteUrl %><%=delCn %>num="+num;
+		if(confirm("덧글을 삭제하시겠습니까?")){			
+			location.href = url;
+		}
+	}
+</script>
 </head>
 <body>
 	<div id="wrap">
@@ -99,7 +109,7 @@
 													<li class="name"><span ><%=dto.getName()%></span></li>
 													<li class="control"><span
 													><%=dto.getCreated()%>
-													<a href="<%=dto.getNum()%>" class="delete">삭제</a></span></li>
+													<a href="#" onclick="del(<%=dto.getNum()%>)" class="delete">삭제</a></span></li>
 												</ul>
 											</div>
 											<div class="book_content">
