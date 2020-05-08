@@ -1,4 +1,6 @@
-﻿<%@page import="com.bbs.BoardDTO"%>
+﻿<%@page import="java.net.URLEncoder"%>
+<%@page import="java.net.URLDecoder"%>
+<%@page import="com.bbs.BoardDTO"%>
 <%@page import="com.bbs.BoardDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
@@ -6,15 +8,38 @@
    String cp = request.getContextPath();
    request.setCharacterEncoding("utf-8");   
    
-   String num = request.getParameter("num");
-   int n=-1;
-   if(num!=null){
-	   n = Integer.parseInt(num);
-   }
    BoardDAO dao = new BoardDAO();
-   out.println(n);
-   BoardDTO dto = dao.readBoard(n);
    
+   int num = Integer.parseInt(request.getParameter("num"));
+   String pageNum = request.getParameter("page");
+   
+   String condition = request.getParameter("condition");
+   String keyword = request.getParameter("keyword");
+   if(condition==null){
+	   condition="subject";
+	   keyword="";
+   }
+   keyword=URLDecoder.decode(keyword,"UTF-8");
+   
+   String query = "page=" + pageNum;
+   if(keyword.length()!=0){
+	   query+="&condition=" + condition + "&keyword="+URLEncoder.encode(keyword,"UTF-8");
+   }
+   
+   //조회수 증가
+   dao.updateHitCount(num);
+   
+   //게시글 가져오기
+   BoardDTO dto = dao.readBoard(num);
+   if(dto==null){
+	   response.sendRedirect(cp+"/bbs/list.jsp?"+query);
+   }
+   dto.setContent(dto.getContent().replaceAll("\n", "<br />"));
+   
+   
+   //이전글, 다음글
+   BoardDTO preReadDto = dao.preReadBoard(num, condition, keyword);
+   BoardDTO nextReadDto = dao.nextReadBoard(num, condition, keyword);
 %>
 <!DOCTYPE html>
 <html>
@@ -77,6 +102,14 @@ textarea:focus, input:focus{
     font-family:나눔고딕, "맑은 고딕", 돋움, sans-serif;
 }
 </style>
+<script>
+	function deleteBoard(num){
+		if(confirm("정말 삭제하시겠습니까?")){
+		 	var url= "<%=cp%>/bbs/delete.jsp?num="+num+"&<%=query%>";
+			location.href=url;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -114,22 +147,39 @@ textarea:focus, input:focus{
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td colspan="2" style="padding-left: 5px;">
-       이전글 :  이전글 입니다.
+       이전글 : 
+		<%if (preReadDto!=null){ %>       
+       		<a href="<%=cp%>/bbs/article.jsp?num=<%=preReadDto.getNum()%>&amp;<%=query%>"><%=preReadDto.getSubject() %></a>
+		<%} else { %>
+			<span>이전 글이 없습니다.</span>
+		<%} %>
     </td>
 </tr>
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td colspan="2" style="padding-left: 5px;">
-    다음글 : 다음글 입니다.
+    다음글 :   	   
+	<%if( nextReadDto!=null){ %>
+    	<a href="<%=cp%>/bbs/article.jsp?num=<%=nextReadDto.getNum()%>&amp;<%=query%>"><%=nextReadDto.getSubject() %></a>
+	<%} else { %>
+		<span>다음 글이 없습니다.</span>
+	<%} %>
     </td>
 </tr>
-<tr height="45">
+
+<tr height="35">
+	<td colspan="2" align="right" style="padding-right:5px;">
+		<%=dto.getIpAddr() %>
+	</td>
+</tr>
+
+<tr height="30">
     <td>
-        <button type="button" class="btn">수정</button>
-        <button type="button" class="btn">삭제</button>
+        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/update.jsp?num=<%=dto.getNum()%>&amp;page=<%=pageNum%>'">수정</button>
+        <button type="button" class="btn" onclick="deleteBoard(<%=dto.getNum()%>)">삭제</button>
     </td>
     <td align="right">
-        <button type="button" class="btn">리스트</button>
+        <button type="button" class="btn" onclick="location.href='<%=cp%>/bbs/list.jsp?<%=query%>'">리스트</button>
     </td>
 </tr>
 </table>

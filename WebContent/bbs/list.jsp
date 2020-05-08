@@ -59,7 +59,7 @@
    
    //페이징 처리
    String query = "";
-   if(keyword.length()==0){
+   if(keyword.length()!=0){
 	   query="condition="+condition+"&keyword="+URLEncoder.encode(keyword,"UTF-8");
    }
    String listUrl = cp+"/bbs/list.jsp";
