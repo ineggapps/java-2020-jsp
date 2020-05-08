@@ -1,8 +1,49 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" %>
+﻿<%@page import="com.util.MyUtil"%>
+<%@page import="com.bbs.BoardDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bbs.BoardDAO"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%
    String cp = request.getContextPath();
    request.setCharacterEncoding("utf-8");   
+
+   MyUtil myUtil = new MyUtil();
+   BoardDAO dao = new BoardDAO();
+   
+   //파라미터로 넘어온 페이지 번호(page: JSP 예약어로 변수명 사용이 불가능함.)
+   String pageNum = request.getParameter("page");
+   int current_page = 1;
+   if(pageNum!=null){
+	   current_page = Integer.parseInt(pageNum);
+   }
+   
+   //검색
+   
+   //전체 데이터 개수
+   int dataCount;
+   dataCount = dao.dataCount();
+   
+   //전체 페이지 수
+   int rows = 10;//한 페이지에 표시할 게시글 수
+   int total_page = myUtil.pageCount(rows, dataCount);
+   //전체 페이지보다 표시할 현재 페이지가 클 경우(웹은 정적이므로 다른 사람이 삭제하여 데이터의 개수가 바뀐 경우 감지할 수 없음.)
+   if(current_page > total_page){
+	   current_page = total_page;
+   }
+
+   //테이블에서 가져올 시작과 끝 위치
+   int start = (current_page-1)*rows+1;
+   int end = current_page * rows;
+   
+   List<BoardDTO> list;
+   list = dao.listBoard(start, end);
+   
+   //페이징 처리
+   String listUrl = cp+"/bbs/list.jsp";
+   String article = cp+"/bbs/article.jsp?page="+current_page;
+   String paging = myUtil.paging(current_page, total_page, listUrl);
+   
 %>
 
 <!DOCTYPE html>
@@ -87,7 +128,11 @@ function searchList() {
 <table style="width: 100%; margin-top: 20px; border-spacing: 0; border-collapse: collapse;">
    <tr height="35">
       <td align="left" width="50%">
-          25개(1/2 페이지)
+      	<%if(dataCount>0){ %>
+         <%=dataCount%>개(<%=current_page%>/<%=total_page%> 페이지)
+         <%}else{ %>
+         게시글이 없습니다.
+         <%} %>
       </td>
       <td align="right">
           &nbsp;
@@ -104,22 +149,23 @@ function searchList() {
       <th width="60" style="color: #787878;">조회수</th>
   </tr>
  
+ <% for(BoardDTO dto: list){ %>
   <tr align="center" height="35" style="border-bottom: 1px solid #cccccc;"> 
-      <td>1</td>
+      <td><%=dto.getNum()%></td>
       <td align="left" style="padding-left: 10px;">
-           <a href="">테스트 제목...</a>
+           <a href="<%=cp%>/bbs/article.jsp?num=<%=dto.getNum()%>"><%=dto.getSubject()%></a>
       </td>
-      <td>홍길동</td>
-      <td>2000-10-10</td>
-      <td>1</td>
+      <td><%=dto.getName()%></td>
+      <td><%=dto.getCreated()%></td>
+      <td><%=dto.getHitCount()%></td>
   </tr>
-
+<%} %>
 </table>
  
 <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
    <tr height="35">
 	<td align="center">
-        1 2 3
+       <%=paging %>
 	</td>
    </tr>
 </table>

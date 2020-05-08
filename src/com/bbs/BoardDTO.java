@@ -83,4 +83,11 @@ public class BoardDTO {
 		this.ipAddr = ipAddr;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDTO [listNum=" + listNum + ", num=" + num + ", subject=" + subject + ", name=" + name
+				+ ", content=" + content + ", created=" + created + ", pwd=" + pwd + ", hitCount=" + hitCount
+				+ ", ipAddr=" + ipAddr + "]";
+	}
+	
 }
