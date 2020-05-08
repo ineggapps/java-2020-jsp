@@ -197,6 +197,9 @@ hr {
 .book_content {
   margin: 30px 0 90px;
   padding: 0 5px;
+  word-break: break-all;
+  line-height: 1.8rem; 
+  color: #333;
 }
 
 img.profile {
@@ -231,7 +234,7 @@ img.profile {
   background-color: #e9ecf3;
 }
 
-.paging li:hover { 
+.paging li:hover {
   background-color: #d7e2eb;
 }
 
@@ -246,13 +249,13 @@ img.profile {
 
 .paging li a {
   display: inline-block;
-  text-align:center; 
-  width:100%;
+  text-align: center;
+  width: 100%;
   height: 100%;
 }
 
 /*p.alert*/
 
-p.alert{
-	text-align:center;
+p.alert {
+  text-align: center;
 }
