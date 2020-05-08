@@ -18,13 +18,13 @@ public class MyCustomUtil {
 	public int[] paging(int current_page, int total_page, String list_url) {
 		
 		int numPerBlock = 10;
-		int start = current_page-5>0?current_page-5:1;
+		int start = current_page-4>0?current_page-4:1;
 		int end;
 		int page = start;
 		List<Integer> pages = new ArrayList<>();
 		
 		if(start+numPerBlock<total_page) {
-			end = start+numPerBlock;
+			end = start+numPerBlock-1; 
 		}else {
 			end = total_page;
 		}

@@ -1,4 +1,5 @@
-﻿<%@page import="com.util.MyUtil"%>
+﻿<%@page import="com.util.MyCustomUtil"%>
+<%@page import="com.util.MyUtil"%>
 <%@page import="com.bbs.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bbs.BoardDAO"%>
@@ -28,6 +29,7 @@
    int rows = 10;//한 페이지에 표시할 게시글 수
    int total_page = myUtil.pageCount(rows, dataCount);
    //전체 페이지보다 표시할 현재 페이지가 클 경우(웹은 정적이므로 다른 사람이 삭제하여 데이터의 개수가 바뀐 경우 감지할 수 없음.)
+   //☢ 게시판을 이용하는 타 사용자가 게시판의 글을 삭제할 경우 현재 게시글이 있는 페이지는 5p였지만 3p가 될 수도 있는 것이다. 
    if(current_page > total_page){
 	   current_page = total_page;
    }
@@ -44,6 +46,11 @@
    String article = cp+"/bbs/article.jsp?page="+current_page;
    String paging = myUtil.paging(current_page, total_page, listUrl);
    
+   MyCustomUtil myCustomUtil = new MyCustomUtil();
+	String cn = listUrl.indexOf("?") >= 0 ? "&amp;" : "?";
+	int[] pages = myCustomUtil.paging(current_page, total_page, listUrl);
+
+   
 %>
 
 <!DOCTYPE html>
@@ -56,6 +63,21 @@
 *{
     margin:0; padding: 0;
 }
+ul, li {
+	list-style-type: none;
+	padding: 0 none;
+}
+
+ul.paging li {
+	display: inline-block;
+	padding: 0 5px;
+}
+
+span.on{
+	font-weight:bold;
+	color:tomato;
+}
+
 body {
     font-size:14px;
 	font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
@@ -165,7 +187,40 @@ function searchList() {
 <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
    <tr height="35">
 	<td align="center">
-       <%=paging %>
+       <%--paging --%>
+       <ul class="paging">
+			<%
+				if(pages[0]>1){%>
+					<li><a href="<%=listUrl%><%=cn%>page=1">처음</a></li>
+			<%}
+			%>
+			<%
+				if(pages[0]>2){%>
+					<li><a href="<%=listUrl%><%=cn%>page=<%=pages[0]-1%>">이전</a></li>
+			<%	}%>						
+			<%
+				for (int i = 0; i < pages.length; i++) {
+				if (current_page == pages[i]) {
+			%>
+				<li><span class="on"><%=pages[i]%></span></li>
+			<%
+				} else {
+			%>
+				<li><a href="<%=listUrl%><%=cn%>page=<%=pages[i]%>"><%=pages[i]%></a></li>
+			<%  
+				}
+			}
+			%>
+			<%
+				if(current_page+1<pages[pages.length-1]){%>
+					<li><a href="<%=listUrl%><%=cn%>page=<%=pages[pages.length-1]+1%>">다음</a></li>
+			<%	}
+			%>
+			<%
+				if(pages[pages.length-1]<total_page){%>
+					<li><a href="<%=listUrl%><%=cn%>page=<%=total_page%>">끝</a></li>
+			<%}%>
+		</ul>
 	</td>
    </tr>
 </table>
