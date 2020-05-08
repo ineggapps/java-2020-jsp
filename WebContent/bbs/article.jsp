@@ -1,10 +1,21 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" %>
+﻿<%@page import="com.bbs.BoardDTO"%>
+<%@page import="com.bbs.BoardDAO"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%
    String cp = request.getContextPath();
    request.setCharacterEncoding("utf-8");   
+   
+   String num = request.getParameter("num");
+   int n=-1;
+   if(num!=null){
+	   n = Integer.parseInt(num);
+   }
+   BoardDAO dao = new BoardDAO();
+   out.println(n);
+   BoardDTO dto = dao.readBoard(n);
+   
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,22 +93,22 @@ textarea:focus, input:focus{
 <table style="width: 100%; margin-top: 20px; border-spacing: 0; border-collapse: collapse;">
 <tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
     <td colspan="2" align="center">
-	   제목입니다.
+	   <%=dto.getSubject()%>
     </td>
 </tr>
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td width="50%" style="padding-left: 5px;">
-       이름 : 홍길동
+       이름 : <%=dto.getName()%>
     </td>
     <td width="50%" align="right" style="padding-right: 5px;">
-        2010-01-01 10:10:10 | 조회 10
+        <%=dto.getCreated() %> | 조회 <%=dto.getHitCount()%>
     </td>
 </tr>
 
 <tr style="border-bottom: 1px solid #cccccc;">
   <td colspan="2" style="padding: 10px 5px;" valign="top" height="200">
-      게시물 내용 입니다.
+      <%=dto.getContent()%>
    </td>
 </tr>
 

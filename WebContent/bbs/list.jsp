@@ -1,4 +1,6 @@
-﻿<%@page import="com.util.MyCustomUtil"%>
+﻿<%@page import="java.net.URLEncoder"%>
+<%@page import="java.net.URLDecoder"%>
+<%@page import="com.util.MyCustomUtil"%>
 <%@page import="com.util.MyUtil"%>
 <%@page import="com.bbs.BoardDTO"%>
 <%@page import="java.util.List"%>
@@ -20,10 +22,20 @@
    }
    
    //검색
+   String condition = request.getParameter("condition");
+   String keyword = request.getParameter("keyword");
+   if(condition==null){//검색으로 조회하는 것이 아니라면 기본 설정으로 세팅
+	   condition="subject";
+	   keyword="";
+   }
+   if(request.getMethod().equalsIgnoreCase("GET")){//GET방식에 한하여 디코딩을 수행
+	   keyword=URLDecoder.decode(keyword,"UTF-8");
+   }
    
    //전체 데이터 개수
    int dataCount;
-   dataCount = dao.dataCount();
+   	//검색일 경우와 그렇지 않은 경우 나누어서 카운트.
+   dataCount = keyword.length()==0?dao.dataCount():dao.dataCount(condition, keyword);
    
    //전체 페이지 수
    int rows = 10;//한 페이지에 표시할 게시글 수
@@ -39,17 +51,28 @@
    int end = current_page * rows;
    
    List<BoardDTO> list;
-   list = dao.listBoard(start, end);
+   if(keyword.length()==0){//검색이 아닌 일반적인 경우
+	   list = dao.listBoard(start, end);
+   } else {//검색일 경우
+	   list = dao.listBoard(start, end, condition, keyword);
+   }
    
    //페이징 처리
+   String query = "";
+   if(keyword.length()==0){
+	   query="condition="+condition+"&keyword="+URLEncoder.encode(keyword,"UTF-8");
+   }
    String listUrl = cp+"/bbs/list.jsp";
-   String article = cp+"/bbs/article.jsp?page="+current_page;
+   String articleUrl = cp+"/bbs/article.jsp?page="+current_page;
+   if(query.length()!=0){
+		listUrl += "?" + query;	   
+		articleUrl += "&" + query;
+   }
    String paging = myUtil.paging(current_page, total_page, listUrl);
    
    MyCustomUtil myCustomUtil = new MyCustomUtil();
 	String cn = listUrl.indexOf("?") >= 0 ? "&amp;" : "?";
 	int[] pages = myCustomUtil.paging(current_page, total_page, listUrl);
-
    
 %>
 
@@ -132,6 +155,7 @@ textarea:focus, input:focus{
 <script type="text/javascript">
 function searchList() {
 	var f=document.searchForm;
+	f.action="<%=listUrl%>";
 	f.submit();
 }
 </script>
@@ -166,12 +190,12 @@ function searchList() {
       <th width="80" style="color: #787878;">작성일</th>
       <th width="60" style="color: #787878;">조회수</th>
   </tr>
- 
+  
  <% for(BoardDTO dto: list){ %>
   <tr align="center" height="35" style="border-bottom: 1px solid #cccccc;"> 
       <td><%=dto.getNum()%></td>
       <td align="left" style="padding-left: 10px;">
-           <a href="<%=cp%>/bbs/article.jsp?num=<%=dto.getNum()%>"><%=dto.getSubject()%></a>
+           <a href="<%=articleUrl%>&amp;num=<%=dto.getNum()%>"><%=dto.getSubject()%></a>
       </td>
       <td><%=dto.getName()%></td>
       <td><%=dto.getCreated()%></td>
