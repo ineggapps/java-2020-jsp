@@ -150,11 +150,7 @@ function searchList() {
 <table style="width: 100%; margin-top: 20px; border-spacing: 0; border-collapse: collapse;">
    <tr height="35">
       <td align="left" width="50%">
-      	<%if(dataCount>0){ %>
          <%=dataCount%>개(<%=current_page%>/<%=total_page%> 페이지)
-         <%}else{ %>
-         게시글이 없습니다.
-         <%} %>
       </td>
       <td align="right">
           &nbsp;
@@ -187,7 +183,8 @@ function searchList() {
 <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
    <tr height="35">
 	<td align="center">
-       <%--paging --%>
+       <%--paging --%> 
+       <%if(dataCount>0){ %>
        <ul class="paging">
 			<%
 				if(pages[0]>1){%>
@@ -221,6 +218,9 @@ function searchList() {
 					<li><a href="<%=listUrl%><%=cn%>page=<%=total_page%>">끝</a></li>
 			<%}%>
 		</ul>
+		<%} else{%>
+			등록된 게시물이 없습니다.
+		<% } %>
 	</td>
    </tr>
 </table>
