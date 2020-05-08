@@ -3,7 +3,7 @@ package com.util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPage {
+public class MyCustomUtil {
 	public int pageCount(int rows, int dataCount) {
 		//데이터의 개수가 0인 경우 처리 방법
 		if(dataCount<=0) {

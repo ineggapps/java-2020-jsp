@@ -1,10 +1,10 @@
-<%@page import="com.util.MyPage"%>
+<%@page import="com.util.MyCustomUtil"%>
 <%@page import="com.util.MyUtil"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	MyPage myPage = new MyPage();
+	MyCustomUtil myPage = new MyCustomUtil();
 	String pageNum = request.getParameter("page");
 	int current_page = 1;
 	if (pageNum != null) {
@@ -16,7 +16,7 @@
 	String listUrl = "bbs_page_my_test.jsp";
 	String cn = listUrl.indexOf("?") >= 0 ? "&amp;" : "?";
 	int[] pages = myPage.paging(current_page, total_page, listUrl);
-	%>
+%>
 <!DOCTYPE html>
 <html>
 <head>
