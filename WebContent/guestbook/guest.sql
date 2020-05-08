@@ -1,0 +1,16 @@
+
+CREATE TABLE guest(
+    num NUMBER PRIMARY KEY,
+    name VARCHAR2(30),
+    content VARCHAR2(4000),
+    created DATE DEFAULT SYSDATE
+);
+
+CREATE SEQUENCE guest_seq
+    INCREMENT BY 1
+    START WITH 1
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+
