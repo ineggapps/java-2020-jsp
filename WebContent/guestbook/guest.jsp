@@ -31,6 +31,8 @@
 	List<GuestDTO> list = dao.listGuest(start, end);
 	String cn = listUrl.indexOf("?") >= 0 ? "&" : "?";
 	String delCn = deleteUrl.indexOf("?") >= 0 ? "&" : "?";
+
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -100,6 +102,11 @@
 								<ul class="books">
 									<%
 										for (GuestDTO dto : list) {
+											String content = dto.getContent();
+											content = content.replaceAll("<", "&lt;");
+											content = content.replaceAll(">", "&gt;");
+											content = content.replaceAll("\n", "<br />");
+											dto.setContent(content);
 									%>
 									<li>
 										<div class="book">
