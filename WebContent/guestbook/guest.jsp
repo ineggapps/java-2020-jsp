@@ -103,6 +103,9 @@
 									<%
 										for (GuestDTO dto : list) {
 											String content = dto.getContent();
+											if(content==null){
+												continue;
+											}
 											content = content.replaceAll("<", "&lt;");
 											content = content.replaceAll(">", "&gt;");
 											content = content.replaceAll("\n", "<br />");
