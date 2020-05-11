@@ -71,11 +71,24 @@ public class BoardServlet extends HttpServlet {
 	}
 
 	private void created(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("mode","created");
 		forward(req,resp,VIEWS+"/created.jsp");
 	}
 
 	private void created_ok(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("글쓰기 시도");
 		String cp = req.getContextPath();
+		BoardDAO dao = new BoardDAO();
+		BoardDTO dto = new BoardDTO();
+		dto.setName(req.getParameter("name"));
+		dto.setSubject(req.getParameter("subject"));
+		dto.setContent(req.getParameter("content"));
+		dto.setPwd(req.getParameter("pwd"));
+		dto.setIpAddr(req.getRemoteAddr());
+		try {
+			dao.insertBoard(dto);
+		} catch (Exception e) {
+		}
 		resp.sendRedirect(cp+"/cbbs/list.do");
 	}
 
@@ -84,6 +97,7 @@ public class BoardServlet extends HttpServlet {
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("mode","update");
 		forward(req,resp,VIEWS+"/created.jsp");
 	}
 

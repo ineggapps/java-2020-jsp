@@ -117,12 +117,7 @@ textarea:focus, input:focus{
             return;
         }
     	
-        var mode="${mode}";
-        if(mode=="created")
-            f.action = "<%=cp%>/";
-        else if(mode=="update")
-            f.action = "<%=cp%>/";
-
+        f.action = "<%=cp%>/cbbs/${mode}_ok.do";
         f.submit();
   }
 </script>
@@ -176,7 +171,7 @@ textarea:focus, input:focus{
       <td align="center" >
         <button type="button" class="btn" onclick="sendBoard();">등록하기</button>
         <button type="reset" class="btn">다시입력</button>
-        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/';">등록취소</button>
+        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/cbbs/list.do';">등록취소</button>
       </td>
     </tr>
   </table>
