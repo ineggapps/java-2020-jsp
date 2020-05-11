@@ -20,6 +20,11 @@
 	<div style="width:90%;border:1px solid red; margin:0 auto;">
 		<c:out value="${naver }" escapeXml="true"/>
 	</div>
+	<h3>네이버 소스 실행 결과</h3>
+	<c:import url="https://www.naver.com"/>
+	<div style="width:90%;border:1px solid red; margin:0 auto;">
+		<c:out value="${url}" escapeXml="false"/>
+	</div>
 	<hr />
 </body>
 </html>
