@@ -1,8 +1,8 @@
 
 CREATE TABLE guest(
     num NUMBER PRIMARY KEY,
-    name VARCHAR2(30),
-    content VARCHAR2(4000),
+    name VARCHAR2(30) NOT NULL,
+    content VARCHAR2(4000) NOT NULL,
     created DATE DEFAULT SYSDATE
 );
 
