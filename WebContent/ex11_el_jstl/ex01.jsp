@@ -1,3 +1,4 @@
+<%-- 
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <!DOCTYPE html>
@@ -34,4 +35,4 @@
 	<p>${m=["x", "y", "z"]; ""} => 배열 값들 선언만 하고 출력하고 싶지 않을 때</p>
 	<p>${m[1] } => m[1] 출력</p>
 </body>
-</html>
+</html>--%>
