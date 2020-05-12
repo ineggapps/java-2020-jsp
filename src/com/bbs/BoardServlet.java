@@ -123,7 +123,8 @@ public class BoardServlet extends HttpServlet {
 		Iterator<BoardDTO> it = list.iterator();
 		while (it.hasNext()) {
 			BoardDTO dto = it.next();
-			listNum = dataCount - (start + n - 1);
+			listNum = dataCount - (start + n - 1);//게시글 번호 순차적으로 차례 매김
+			//게시글이 중간에 삭제된 경우 글번호가 건너뛰는 것은 보기에 좋지 않다.
 			dto.setListNum(listNum);
 			n++;
 		}
