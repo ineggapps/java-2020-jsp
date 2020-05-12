@@ -278,14 +278,29 @@ public class BoardServlet extends HttpServlet {
 		
 		int num = Integer.parseInt(req.getParameter("num"));
 		String page = req.getParameter("page");
+		
+		String condition = req.getParameter("condition");
+		String keyword = req.getParameter("keyword");
+		
+		if(condition==null) {
+			condition="subjet";
+			keyword="";
+		}
+		keyword=URLDecoder.decode(keyword,"UTF-8");
 
+		String query = "page=" + page;
+		if(keyword.length()!=0) {
+			query += "&condition="+condition + "&keyword="+ URLEncoder.encode(keyword,"UTF-8");
+		}
+		
+		
 		try {
 			dao.deleteBoard(num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		resp.sendRedirect(cp + "/cbbs/list.do?page="+page);
+		resp.sendRedirect(cp + "/cbbs/list.do?" + query);
 	}
 
 }
