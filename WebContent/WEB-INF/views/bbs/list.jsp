@@ -90,7 +90,7 @@ function searchList() {
 <table style="width: 100%; margin-top: 20px; border-spacing: 0;">
    <tr height="35">
       <td align="left" width="50%">
-          25개(1/2 페이지)
+          ${dataCount }개(${page }/${totalPage} 페이지)
       </td>
       <td align="right">
           &nbsp;
@@ -107,22 +107,24 @@ function searchList() {
       <th width="60" style="color: #787878;">조회수</th>
   </tr>
  
+ <c:forEach var="dto" items="${list}">
   <tr align="center" height="35" style="border-bottom: 1px solid #cccccc;"> 
-      <td>1</td>
+      <td>${dto.listNum}</td>
       <td align="left" style="padding-left: 10px;">
-           <a href="">테스트 제목...</a>
+           <a href="${articleUrl}&amp;${dto.num}">${dto.subject}</a>
       </td>
-      <td>홍길동</td>
-      <td>2000-10-10</td>
-      <td>1</td>
+      <td>${dto.name}</td>
+      <td>${dto.created}</td>
+      <td>${dto.hitCount }</td>
   </tr>
+ </c:forEach>
 
 </table>
  
 <table style="width: 100%; border-spacing: 0;">
    <tr height="35">
 	<td align="center">
-        1 2 3
+		${dataCount==0? "등록된 게시물이 없습니다.":paging}
 	</td>
    </tr>
 </table>

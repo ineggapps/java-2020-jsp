@@ -1,6 +1,9 @@
 package com.bbs;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.util.MyUtil;
 
 //이미 WebContent폴더에 bbs폴더가 존재하지만 WebServlet의 경로를 /bbs/*로 지정하면 서로 경로가 겹친다.
 //이렇게 경로가 겹치는 경우에는 Servlet의 우선순위가 더 높기 때문에 WebContent의 /bbs폴더에는 접근할 수 없다.
@@ -42,37 +47,115 @@ public class BoardServlet extends HttpServlet {
 		String uri = req.getRequestURI();
 		if (uri.indexOf("list.do") != -1) {
 			// 게시글 리스트
-			list(req,resp);
+			list(req, resp);
 		} else if (uri.indexOf("created.do") != -1) {
 			// 글 등록 폼
-			created(req,resp);
+			created(req, resp);
 		} else if (uri.indexOf("created_ok.do") != -1) {
 			// 글 등록 완료
-			created_ok(req,resp);
+			created_ok(req, resp);
 		} else if (uri.indexOf("article.do") != -1) {
 			// 글 보기
-			article(req,resp);
+			article(req, resp);
 		} else if (uri.indexOf("update.do") != -1) {
 			// 글 수정 폼
-			update(req,resp);
+			update(req, resp);
 		} else if (uri.indexOf("update_ok.do") != -1) {
 			// 글 수정 완료
-			update_ok(req,resp);
+			update_ok(req, resp);
 		} else if (uri.indexOf("delete.do") != -1) {
 			// 글 삭제
-			delete(req,resp);
+			delete(req, resp);
+		} else {
+			resp.sendRedirect("list.do");
 		}
 
 	}
 
-	public static final String VIEWS="/WEB-INF/views/bbs";
+	public static final String VIEWS = "/WEB-INF/views/bbs";
+
 	private void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		forward(req,resp,VIEWS+"/list.jsp");
+		BoardDAO dao = new BoardDAO();
+		MyUtil myUtil = new MyUtil();
+		String cp = req.getContextPath();
+
+		String page = req.getParameter("page");
+		int current_page = 1;
+		if (page != null) {
+			current_page = Integer.parseInt(page);
+		}
+
+		String condition = req.getParameter("condition");
+		String keyword = req.getParameter("keyword");
+		if (condition == null) {
+			condition = "subject";
+			keyword = "";
+		}
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		int dataCount;
+		if (keyword.length() == 0) {
+			dataCount = dao.dataCount();
+		} else {
+			dataCount = dao.dataCount(condition, keyword);
+		}
+
+		int rows = 10;
+		int total_page = myUtil.pageCount(rows, dataCount);
+		if (current_page > total_page) {
+			current_page = total_page;
+		}
+
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+
+		List<BoardDTO> list;
+		if (keyword.length() == 0) {
+			list = dao.listBoard(start, end);
+		} else {
+			list = dao.listBoard(start, end, condition, keyword);
+		}
+
+		//DTO객체에 목록 번호 삽입하기.
+		int listNum, n = 0;
+		Iterator<BoardDTO> it = list.iterator();
+		while (it.hasNext()) {
+			BoardDTO dto = it.next();
+			listNum = dataCount - (start + n - 1);
+			dto.setListNum(listNum);
+			n++;
+		}
+
+		String query = "";
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		String listUrl = cp + "/cbbs/list.do";
+		String articleUrl = cp + "/cbbs/article.do?page=" + current_page;
+		if (query.length() == 0) {
+			listUrl += "?" + query;
+			articleUrl += "&" + query;
+		}
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+
+		// list.jsp에 넘겨 줄 데이터
+		req.setAttribute("list", list);
+		req.setAttribute("paging", paging);
+		req.setAttribute("page", current_page);
+		req.setAttribute("dataCount", dataCount);
+		req.setAttribute("totalPage", total_page);
+		req.setAttribute("articleUrl", articleUrl);
+		
+		forward(req, resp, VIEWS + "/list.jsp");
 	}
 
 	private void created(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("mode","created");
-		forward(req,resp,VIEWS+"/created.jsp");
+		req.setAttribute("mode", "created");
+		forward(req, resp, VIEWS + "/created.jsp");
 	}
 
 	private void created_ok(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -89,26 +172,26 @@ public class BoardServlet extends HttpServlet {
 			dao.insertBoard(dto);
 		} catch (Exception e) {
 		}
-		resp.sendRedirect(cp+"/cbbs/list.do");
+		resp.sendRedirect(cp + "/cbbs/list.do");
 	}
 
 	private void article(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		forward(req,resp,VIEWS+"/article.jsp");
+		forward(req, resp, VIEWS + "/article.jsp");
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("mode","update");
-		forward(req,resp,VIEWS+"/created.jsp");
+		req.setAttribute("mode", "update");
+		forward(req, resp, VIEWS + "/created.jsp");
 	}
 
 	private void update_ok(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cp = req.getContextPath();
-		resp.sendRedirect(cp+"/cbbs/list.do");
+		resp.sendRedirect(cp + "/cbbs/list.do");
 	}
 
 	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cp = req.getContextPath();
-		resp.sendRedirect(cp+"/cbbs/list.do");
+		resp.sendRedirect(cp + "/cbbs/list.do");
 	}
 
 }
