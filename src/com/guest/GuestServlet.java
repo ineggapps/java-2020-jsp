@@ -54,7 +54,7 @@ public class GuestServlet extends HttpServlet {
 		String cp = req.getContextPath();
 		MyCustomUtil myCustomUtil = new MyCustomUtil();
 		int current_page = 1;
-		int rows = 10;
+		int rows = 5;
 		int dataCount = dao.dataCount();
 		int total_page = myCustomUtil.pageCount(rows, dataCount);
 		String pageNum = req.getParameter("page");
@@ -66,7 +66,7 @@ public class GuestServlet extends HttpServlet {
 		if(current_page>total_page){
 			current_page = total_page;
 		}
-		int[] pages = myCustomUtil.paging(current_page, total_page, listUrl);
+		int[] pages = myCustomUtil.paging(rows, current_page, total_page, listUrl);
 		
 		int start = (current_page - 1) * rows + 1;
 		int end = current_page * rows;
