@@ -67,6 +67,14 @@ textarea:focus, input:focus{
     font-family:나눔고딕, "맑은 고딕", 돋움, sans-serif;
 }
 </style>
+<script>
+	function deleteBoard(num){
+		if(confirm("게시글을 삭제하시겠습니까?")){
+			var url = "<%=cp%>/cbbs/delete.do?num="+num+"&${query}";
+			location.href = url;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -83,44 +91,53 @@ textarea:focus, input:focus{
 <table style="width: 100%; margin-top: 20px; border-spacing: 0; border-collapse: collapse;">
 <tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
     <td colspan="2" align="center">
-	   제목입니다.
+	   ${dto.subject }
     </td>
 </tr>
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td width="50%" align="left" style="padding-left: 5px;">
-       이름 : 홍길동
-    </td>
+       작성자: ${dto.name}
+    </td> 
     <td width="50%" align="right" style="padding-right: 5px;">
-        2010-01-01 10:10:10 | 조회 10
+        ${dto.created} | 조회 ${dto.hitCount}
     </td>
 </tr>
 
 <tr style="border-bottom: 1px solid #cccccc;">
   <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-      게시물 내용 입니다.
+      ${dto.content}
    </td>
 </tr>
 
+<c:if test="${not empty preReadDto}">
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td colspan="2" align="left" style="padding-left: 5px;">
-       이전글 :  이전글 입니다.
+       이전글 : <a href="<%=cp%>/cbbs/article.do?num=${preReadDto.num}&${query}">${preReadDto.subject }</a> 
     </td>
+</tr>
+</c:if>
+
+<c:if test="${not empty nextReadDto}">
+<tr height="35" style="border-bottom: 1px solid #cccccc;">
+    <td colspan="2" align="left" style="padding-left: 5px;">
+    다음글 : <a href="<%=cp%>/cbbs/article.do?num=${nextReadDto.num}&${query}">${nextReadDto.subject}</a>
+    </td>
+</tr>
+</c:if>
+
+<tr height="25">
+	<td colspan="2" align="right">${dto.ipAddr}</td>
 </tr>
 
-<tr height="35" style="border-bottom: 1px solid #cccccc;">
-    <td colspan="2" align="left" style="padding-left: 5px;">
-    다음글 : 다음글 입니다.
-    </td>
-</tr>
 <tr height="45">
     <td>
-        <button type="button" class="btn">수정</button>
-        <button type="button" class="btn">삭제</button>
+        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/cbbs/update.do?num=${dto.num}&page=${page}'">수정</button>
+        <button type="button" class="btn" onclick="deleteBoard('${dto.num}')">삭제</button>
     </td>
 
     <td align="right">
-        <button type="button" class="btn">리스트</button>
+        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/cbbs/list.do?${query}'">리스트</button>
     </td>
 </tr>
 </table>

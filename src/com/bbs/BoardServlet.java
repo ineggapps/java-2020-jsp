@@ -191,34 +191,101 @@ public class BoardServlet extends HttpServlet {
 			condition="subjet";
 			keyword="";
 		}
-		if(req.getMethod().equalsIgnoreCase("GET")) {
-			keyword=URLDecoder.decode(keyword,"UTF-8");
-		}
-		
+		keyword=URLDecoder.decode(keyword,"UTF-8");
 		BoardDTO dto = dao.readBoard(num);
 		
 		//TODO: 2020. 5. 12. 회원가입
 		//TODO: 2020. 5. 13. 로그인
 		//TODO: 2020. 5. 14. 18c 게시판 + 회원가입 + 로그인 + 쪽지
 		
+		String query = "page=" + page;
+		if(keyword.length()!=0) {
+			query += "&condition="+condition + "&keyword="+ URLEncoder.encode(keyword,"UTF-8");
+		}
 		
+		try {
+			//조회수 올리기
+			dao.updateHitCount(num);
+			//게시글
+			dao.readBoard(num);
+			if(dto==null) {
+				resp.sendRedirect(cp + "/cbbs/list.do?"+query);
+				return;
+			}
+			//줄바꿈 처리
+			dto.setContent(dto.getContent().replaceAll("\n", "<br />"));
+			//이전글, 다음글
+			BoardDTO preReadDto = dao.preReadBoard(num, condition, keyword);
+			BoardDTO nextReadDto = dao.nextReadBoard(num, condition, keyword);
+			
+			req.setAttribute("dto", dto);
+			req.setAttribute("preReadDto", preReadDto);
+			req.setAttribute("nextReadDto", nextReadDto);
+			req.setAttribute("page", page);
+			req.setAttribute("query", query);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		
 		forward(req, resp, VIEWS + "/article.jsp");
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
+		String cp = req.getContextPath();
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		String page = req.getParameter("page");
+		
+		BoardDTO dto = dao.readBoard(num);
+		if(dto==null) {
+			resp.sendRedirect(cp+"/cbbs/list.do?page="+page);
+			return;
+		}
+		
+		req.setAttribute("dto", dto);
+		req.setAttribute("page", page);
 		req.setAttribute("mode", "update");
 		forward(req, resp, VIEWS + "/created.jsp");
 	}
 
 	private void update_ok(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
 		String cp = req.getContextPath();
-		resp.sendRedirect(cp + "/cbbs/list.do");
+		
+		String page = req.getParameter("page");
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setNum(Integer.parseInt(req.getParameter("num")));
+		dto.setName(req.getParameter("name"));
+		dto.setSubject(req.getParameter("subject"));
+		dto.setContent(req.getParameter("content"));
+		dto.setPwd(req.getParameter("pwd"));
+		
+		try {
+			dao.updateBoard(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		resp.sendRedirect(cp + "/cbbs/list.do?page="+page);
 	}
 
 	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
 		String cp = req.getContextPath();
-		resp.sendRedirect(cp + "/cbbs/list.do");
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		String page = req.getParameter("page");
+
+		try {
+			dao.deleteBoard(num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		resp.sendRedirect(cp + "/cbbs/list.do?page="+page);
 	}
 
 }
