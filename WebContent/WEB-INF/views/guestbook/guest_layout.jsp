@@ -7,10 +7,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -18,13 +16,13 @@
 <meta charset="UTF-8" />
 <title>방명록</title>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-<link rel="stylesheet" href="<%=cp %>/guestbook/css/reset.css" />
-<link rel="stylesheet" href="<%=cp %>/guestbook/css/layout.css" />
+<link rel="stylesheet" href="../guestbook/css/reset.css" />
+<link rel="stylesheet" href="../guestbook/css/layout.css" />
 <script>
 	function del(num){
 		var url="${deleteUrl}${delCn}num="+num;
 		if(confirm("덧글을 삭제하시겠습니까?")){			
-			location.href = url; 
+			location.href = url;
 		}
 	}
 </script>
@@ -34,7 +32,7 @@
 		<header>
 			<div id="header_inner">
 				<h1>
-					<img src="<%=cp %>/guestbook/images/logo.png" class="logo" alt="logo" />방명록
+					<img src="../guestbook/images/logo.png" class="logo" alt="logo" />방명록
 				</h1>
 			</div>
 		</header>
@@ -81,7 +79,7 @@
 							<div class="row_content">
 								<ul class="books">
 									<!-- 반복되는 게시물 부분 -->
-									<c:forEach var="dao" items="${list}">
+									<c:forEach var="dao" items="list">
 									<li>
 										<div class="book">
 											<div class="book_title">
@@ -89,44 +87,25 @@
 													src="https://res.cloudinary.com/eightcruz/image/facebook/c_lfill,h_44,w_44/2642920005821009"
 													alt="profile" class="profile" />
 												<ul>
-													<li class="name"><span>${dao.name}</span></li>
-													<li class="control"><span>${dao.created} <a href="#"
-															onclick="del(${dao.num})" class="delete">삭제</a>
+													<li class="name"><span>작성자</span></li>
+													<li class="control"><span>일시 <a href="#"
+															onclick="del(${item.num})" class="delete">삭제</a>
 													</span></li>
 												</ul>
 											</div>
-											<div class="book_content">${dao.content}</div>
+											<div class="book_content">내용</div>
 										</div>
 									</li>
 									</c:forEach>
 									<!-- 반복 끝 -->
 								</ul>
-								<div> 
+								<div>
 									<!-- 페이징해야 하는 경우 -->
-									<c:if test="${dataCount>0}">
 									<ul class="paging">
-										<c:if test="${pages[0]>1}">
-											<li><a href="${listUrl}${cn}page=1">처음</a></li>
-										</c:if>
-										<c:if test="${pages[0]>2}">
-											<li><a href="${listUrl}${cn}page=${pages[0] - 1}">이전</a></li>
-										</c:if>
-										<c:forEach var="i" begin="0" end="${fn:length(pages)-1}">
-											<li${pages[i]==current_page?" class=\"on\"":""}><a href="${listUrl}${cn}page=${pages[i]}">${pages[i]}</a></li>
-										</c:forEach>
-										<c:if test="${current_page + 1 < pages[fn:length(pages)- 1]}">
-											<li><a
-											href="${listUrl}${cn}page=${pages[fn:length(pages)- 1] + 1}">다음</a></li>
-										</c:if>
-										<c:if test="${pages[fn:length(pages) - 1] < total_page}">
-											<li><a href="${listUrl}${cn}page=${total_page}">끝</a></li>
-										</c:if>
+										<li>1</li>
 									</ul>
-									</c:if>
-									<c:if test="${dataCount==0}">
-										<!-- 데이터가 없는 경우 -->
-										<p class="alert">등록된 게시물이 없습니다.</p>
-									</c:if>
+									<!-- 데이터가 없는 경우 -->
+									<p class="alert">등록된 게시물이 없습니다.</p>
 								</div>
 							</div>
 						</div>

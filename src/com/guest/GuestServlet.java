@@ -61,8 +61,8 @@ public class GuestServlet extends HttpServlet {
 		if (pageNum != null) {
 			current_page = Integer.parseInt(pageNum);
 		}
-		String listUrl = cp + "/" + GuestDAO.FOLDER + "/" + GuestDAO.PAGE_GUEST;
-		String deleteUrl = cp + "/" + GuestDAO.FOLDER + "/" + GuestDAO.PAGE_DELETE + "?page=" + current_page;
+		String listUrl = cp + "/guest/list.do";
+		String deleteUrl = cp + "/guest/delete.do";
 		if(current_page>total_page){
 			current_page = total_page;
 		}
@@ -73,11 +73,13 @@ public class GuestServlet extends HttpServlet {
 		List<GuestDTO> list = dao.listGuest(start, end);
 		String cn = listUrl.indexOf("?") >= 0 ? "&" : "?";
 		String delCn = deleteUrl.indexOf("?") >= 0 ? "&" : "?";
+		req.setAttribute("current_page", current_page);
+		req.setAttribute("total_page", total_page);
 		req.setAttribute("dataCount", dataCount);
 		req.setAttribute("listUrl", listUrl);
 		req.setAttribute("deleteUrl", deleteUrl);
 		req.setAttribute("pages", pages);
-		req.setAttribute("items", list);
+		req.setAttribute("list", list);
 		req.setAttribute("cn", cn);
 		req.setAttribute("delCn", delCn);
 		
