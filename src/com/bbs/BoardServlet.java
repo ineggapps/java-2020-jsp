@@ -1,6 +1,7 @@
 package com.bbs;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
@@ -136,7 +137,7 @@ public class BoardServlet extends HttpServlet {
 
 		String listUrl = cp + "/cbbs/list.do";
 		String articleUrl = cp + "/cbbs/article.do?page=" + current_page;
-		if (query.length() == 0) {
+		if (query.length() != 0) {
 			listUrl += "?" + query;
 			articleUrl += "&" + query;
 		}
@@ -177,6 +178,31 @@ public class BoardServlet extends HttpServlet {
 	}
 
 	private void article(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
+		String cp = req.getContextPath();
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		String page = req.getParameter("page");
+		
+		String condition = req.getParameter("condition");
+		String keyword = req.getParameter("keyword");
+		
+		if(condition==null) {
+			condition="subjet";
+			keyword="";
+		}
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword=URLDecoder.decode(keyword,"UTF-8");
+		}
+		
+		BoardDTO dto = dao.readBoard(num);
+		
+		//TODO: 2020. 5. 12. 회원가입
+		//TODO: 2020. 5. 13. 로그인
+		//TODO: 2020. 5. 14. 18c 게시판 + 회원가입 + 로그인 + 쪽지
+		
+		
+		
 		forward(req, resp, VIEWS + "/article.jsp");
 	}
 

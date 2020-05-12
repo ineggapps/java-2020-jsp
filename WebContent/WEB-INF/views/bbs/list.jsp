@@ -111,7 +111,7 @@ function searchList() {
   <tr align="center" height="35" style="border-bottom: 1px solid #cccccc;"> 
       <td>${dto.listNum}</td>
       <td align="left" style="padding-left: 10px;">
-           <a href="${articleUrl}num=${dto.num}">${dto.subject}</a>
+           <a href="${articleUrl}&num=${dto.num}">${dto.subject}</a>
       </td>
       <td>${dto.name}</td>
       <td>${dto.created}</td>
