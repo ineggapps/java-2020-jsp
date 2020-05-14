@@ -10,7 +10,8 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
 <body>
-	<form action="ex02_ok.jsp" method="post">
+	<!-- enctype="multipart/form-data"라고 명시해야만 파일이 전송된다고 생각한다. -->
+	<form action="ex02_ok.jsp" method="post" enctype="multipart/form-data">
 		<p>이름: <input type="text" name="name"/></p>
 		<p>제목: <input type="text" name="subject"/></p>
 		<p>파일: <input type="file" name="upload"/></p>

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
+	//enctype="multipart/form-data"로 form을 명시하면 getParameter 메서드로 받을 수 없게 된다.
 	String name = request.getParameter("name");
 	String subject= request.getParameter("subject");
 	String upload = request.getParameter("upload");
