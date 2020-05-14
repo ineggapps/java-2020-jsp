@@ -6,6 +6,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
+	/*
+	■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+	TODO: 그러나 파일 다운로드는 100% 확신할 수 없다.
+	저장소가 고장나서 읽어들이지 못하거나, 파일이 삭제되어서 존재하지 않는 경우가 있음.
+	따라서 이에 대하여 파일을 다운로드하지 못했다는 메시지를 출력해 주어야 한다.
+	■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+	*/
 	request.setCharacterEncoding("UTF-8");
 
 	//localhost:9090/context명의 실제 물리 경로
