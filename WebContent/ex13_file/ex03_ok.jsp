@@ -52,5 +52,7 @@
 	<p>originalFilename: <%=originalFilename%></p>
 	<p>saveFilename: <%=saveFilename%></p>
 	<p>fileSize: <%=fileSize%> byte(s)</p>
+	
+	<p><a href="down.jsp?file1=<%=saveFilename%>&amp;file2=<%=originalFilename%>">다운로드</a></p>
 </body>
 </html>
