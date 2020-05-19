@@ -42,4 +42,36 @@
 		<url-pattern>/hello</url-pattern>
 	</servlet-mapping>
 
+	<!-- ServletConfig, ServletContext -->
+	<!-- Context-param은 어느 서블릿에서나 사용할 수 있다. -->
+	<context-param>
+		<param-name>ip</param-name>
+		<param-value>127.0.0.1</param-value>
+	</context-param>
+	<context-param>
+		<param-name>user</param-name>
+		<param-value>홍길동</param-value>
+	</context-param>
+	<context-param>
+		<param-name>pwd</param-name>
+		<param-value>hello12345</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>servletConfigTest</servlet-name>
+		<servlet-class>com.sc.ServletConfigTest</servlet-class>
+		<init-param>
+			<param-name>subject</param-name>
+			<param-value>자바</param-value>
+		</init-param>
+		<init-param>
+			<param-name>score</param-name>
+			<param-value>100점</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>servletConfigTest</servlet-name>
+		<url-pattern>/config</url-pattern>
+	</servlet-mapping>
 </web-app>
