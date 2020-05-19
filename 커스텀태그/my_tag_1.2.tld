@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+         "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_2.dtd">
+
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>short_name</short-name>
+
+  <tag>
+	<name>tag_name</name>
+	<tag-class>java_class</tag-class>
+	<body-content>bady_content</body-content>
+  </tag>
+</taglib>
+    
